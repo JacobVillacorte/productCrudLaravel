@@ -1,11 +1,174 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Product Management System - Laravel Livewire SPA
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, single-page application (SPA) built with Laravel 12 and Livewire 3 for managing product inventory. This application features seamless navigation, real-time updates, and a responsive design.
+
+## Features
+
+### 🔐 Authentication System
+- **Livewire-powered login/registration** with real-time validation
+- **SPA navigation** - no page refreshes during authentication
+- **Session management** with secure logout
+
+### 📦 Product Management
+- **Complete CRUD operations** for products
+- **Image upload and preview** functionality
+- **Real-time form validation**
+- **Modal-based creation and editing**
+- **Responsive product grid view**
+- **Detailed product view modal**
+
+### 🚀 Modern SPA Experience
+- **Wire:navigate** for seamless page transitions
+- **No page refreshes** - everything happens in real-time
+- **Loading states** and user feedback
+- **Responsive Bootstrap 5 design**
+- **Clean and intuitive UI**
+
+## Technology Stack
+
+- **Laravel 12** - Backend framework
+- **Livewire 3** - Full-stack framework for dynamic interfaces
+- **Bootstrap 5** - Responsive CSS framework
+- **Bootstrap Icons** - Icon library
+- **MySQL** - Database
+- **PHP 8.2+** - Programming language
+
+## Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/JacobVillacorte/productCrudLaravel.git
+   cd productCrudLaravel
+   ```
+
+2. **Install dependencies**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+4. **Database configuration**
+   - Configure your database settings in `.env`
+   - Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+
+5. **Storage setup**
+   ```bash
+   php artisan storage:link
+   ```
+
+6. **Start development server**
+   ```bash
+   php artisan serve
+   ```
+
+## Project Structure
+
+### Livewire Components
+
+```
+app/Livewire/
+├── Auth/
+│   ├── Login.php          # Login component
+│   └── Register.php       # Registration component
+├── Navigation.php         # Navigation with logout
+└── Products.php          # Main product management
+```
+
+### Views
+
+```
+resources/views/
+├── layouts/
+│   ├── app.blade.php      # Main app layout
+│   └── guest.blade.php    # Guest layout for auth
+└── livewire/
+    ├── auth/
+    │   ├── login.blade.php
+    │   └── register.blade.php
+    ├── navigation.blade.php
+    └── products.blade.php
+```
+
+## Features in Detail
+
+### SPA Navigation
+- Uses Livewire's `wire:navigate` for seamless transitions
+- No page refreshes when moving between sections
+- Maintains state across navigation
+
+### Image Handling
+- **Upload preview** before saving
+- **Automatic storage** in `storage/app/public/products/`
+- **Responsive images** with proper aspect ratios
+- **Fallback display** for products without images
+
+### Real-time Validation
+- **Client-side validation** feedback
+- **Server-side validation** with proper error display
+- **Visual feedback** with Bootstrap styling
+
+### Responsive Design
+- **Mobile-first** approach
+- **Grid system** that adapts to screen size
+- **Touch-friendly** interface elements
+
+## API Endpoints (Livewire)
+
+All interactions happen through Livewire components without traditional API endpoints:
+
+- **Authentication**: Login/Register components handle auth flows
+- **Product CRUD**: Products component handles all product operations
+- **File uploads**: Handled automatically by Livewire
+
+## Security Features
+
+- **CSRF protection** on all forms
+- **Authentication middleware** for protected routes
+- **File upload validation** for images
+- **SQL injection protection** through Eloquent ORM
+
+## Performance Optimizations
+
+- **Lazy loading** for large product lists
+- **Optimized images** with proper sizing
+- **Minimal JavaScript** - mostly handled by Livewire
+- **Efficient database queries** with Eloquent
+
+## Browser Compatibility
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+## License
+
+This project is open-sourced software licensed under the [MIT license](LICENSE).
+
+## Support
+
+For support, email jacob@example.com or create an issue on GitHub.
+
+---
+
+**Built with ❤️ using Laravel and Livewire**
 
 ## About Laravel
 

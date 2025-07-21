@@ -1,27 +1,48 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SystUserController;
-use App\Http\Livewire\ProductLivewire;
+use App\Http\Controllers\SimpleAuthController;
+use App\Http\Controllers\NoCSRFAuthController;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\Register;
+use App\Livewire\Auth\TestRegister;
+use App\Livewire\Products;
 
-// Routes that require authentication
-Route::middleware(['auth'])->group(function () {
-
-    // Redirect root to /products
-    Route::get('/', function () {
-        return redirect()->route('products');
-    });
-
-    // Livewire product management
-    Route::get('/products', ProductLivewire::class)->name('products');
-
-    // Logout route (POST)
-    Route::post('/logout', [SystUserController::class, 'logout'])->name('logout');
+// Debug route
+Route::get('/debug-csrf', function() {
+    return response()->json([
+        'csrf_token' => csrf_token(),
+        'session_id' => session()->getId(),
+        'session_started' => session()->isStarted(),
+        'session_driver' => config('session.driver'),
+    ]);
 });
 
-// Public authentication routes
-Route::get('/login', [SystUserController::class, 'login'])->name('login');
-Route::post('/login', [SystUserController::class, 'authenticate']);
+// Redirect root to products for authenticated users
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', Products::class)->name('home');
+    Route::get('/products', Products::class)->name('products');
+    Route::get('/products/create', \App\Livewire\Products\Create::class)->name('products.create');
+    Route::get('/products/{product}', \App\Livewire\Products\Show::class)->name('products.show');
+    Route::get('/products/{product}/edit', \App\Livewire\Products\Edit::class)->name('products.edit');
+});
 
-Route::get('/register', [SystUserController::class, 'register'])->name('register');
-Route::post('/register', [SystUserController::class, 'store']);
+// Authentication routes (guests only)
+Route::middleware(['guest'])->group(function () {
+    Route::get('/login', Login::class)->name('login');
+    Route::get('/register', Register::class)->name('register');
+    Route::get('/test-register', TestRegister::class)->name('test-register');
+    
+    // Simple traditional registration test
+    Route::get('/simple-register', [SimpleAuthController::class, 'showRegister'])->name('simple.register.form');
+    Route::post('/simple-register', [SimpleAuthController::class, 'register'])->name('simple.register');
+    
+    // No CSRF test
+    Route::get('/no-csrf-register', [NoCSRFAuthController::class, 'showRegister'])->name('no-csrf.register.form');
+    Route::post('/no-csrf-register', [NoCSRFAuthController::class, 'register'])->name('no-csrf.register');
+});
+
+// Catch-all redirect for authenticated users
+Route::middleware(['auth'])->get('/{any}', function () {
+    return redirect()->route('products');
+})->where('any', '.*');
